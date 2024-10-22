@@ -3,12 +3,13 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <style>
         #navbar-brand {
-         align-items: center !important;
+            align-items: center !important;
         }
     </style>
 
@@ -21,7 +22,7 @@
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between"  style="color:lightblue;">
                 <ul class="navbar-nav flex-grow-1" style=" justify-content: flex-end;">
                     <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
