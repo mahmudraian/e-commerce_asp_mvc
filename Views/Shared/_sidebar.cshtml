@@ -1,0 +1,87 @@
+﻿
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+<nav class="sidebar card py-2 mb-4">
+    <ul class="nav flex-column" id="nav_accordion">
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <i class="fas fa-home"></i> Link name
+            </a>
+        </li>
+        <li class="nav-item has-submenu">
+            <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#submenu1">
+                <i class="fas fa-layer-group"></i> Submenu links
+                <i class="fas fa-angle-down float-end"></i>
+            </a>
+            <ul class="submenu collapse" id="submenu1">
+                <li><a class="nav-link" href="#">Submenu item 1</a></li>
+                <li><a class="nav-link" href="#">Submenu item 2</a></li>
+                <li><a class="nav-link" href="#">Submenu item 3</a></li>
+            </ul>
+        </li>
+        <li class="nav-item has-submenu">
+            <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#submenu2">
+                <i class="fas fa-bars"></i> More menus
+                <i class="fas fa-angle-down float-end"></i>
+            </a>
+            <ul class="submenu collapse" id="submenu2">
+                <li><a class="nav-link" href="#">Submenu item 4</a></li>
+                <li><a class="nav-link" href="#">Submenu item 5</a></li>
+                <li><a class="nav-link" href="#">Submenu item 6</a></li>
+                <li><a class="nav-link" href="#">Submenu item 7</a></li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <i class="fas fa-info-circle"></i> Something
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <i class="fas fa-link"></i> Other link
+            </a>
+        </li>
+    </ul>
+</nav>
+
+<style>
+    .sidebar {
+        background-color: #f8f9fa;
+        border-right: 1px solid #ddd;
+    }
+
+    .nav-link {
+        color: #333;
+        padding: 10px 15px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+
+        .nav-link:hover {
+            background-color: #e9ecef;
+        }
+
+    .nav-item.has-submenu .nav-link {
+        position: relative;
+    }
+
+    .nav-item.has-submenu .submenu {
+        list-style: none;
+        padding-left: 20px;
+    }
+
+    .submenu a {
+        color: #555;
+    }
+
+        .submenu a:hover {
+            background-color: #f1f1f1;
+        }
+
+    .fas {
+        margin-right: 8px;
+    }
+</style>
