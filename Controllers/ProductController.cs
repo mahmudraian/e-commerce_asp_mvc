@@ -10,18 +10,30 @@ namespace e_commerce.Controllers
     public class ProductController : Controller
     {
 
-        private readonly ProductDataAccess _dataAccess;
+        private readonly ProductDataAccess _productdataAccess;
+        private readonly CategoryDataAccess _categorydataaccess;
         public ProductController() {
-            _dataAccess = new ProductDataAccess();
+            _productdataAccess = new ProductDataAccess();
+            _categorydataaccess = new CategoryDataAccess();
         
         }
+
+       
 
         // GET: Product
         public ActionResult Index()
         {
-            var products = _dataAccess.ListProduct();
+            var products = _productdataAccess.ListProduct();
+            var categories = _categorydataaccess.CategoryList();
+
 
             //return Json(products,JsonRequestBehavior.AllowGet);
+
+            ViewBag.Msz = "Product";
+            ViewBag.Title = "Product";
+            ViewBag.Categories = categories;
+           
+
 
             return View(products);
         }

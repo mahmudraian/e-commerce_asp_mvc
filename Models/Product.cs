@@ -1,4 +1,5 @@
-﻿using System;
+﻿using e_commerce.DataAccess;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -25,7 +26,21 @@ namespace e_commerce.Models
 
         public DateTime updated_at { get; set;}
 
+        public readonly ProductDataAccess _productDataAccess;
 
+
+        public Product() { 
+        
+        _productDataAccess =  new ProductDataAccess();
+        }
+
+        public List<Product> productsList() { 
+            
+            var products =  _productDataAccess.ListProduct();
+            
+            return products;
+        
+        }
 
     }
 }

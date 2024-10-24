@@ -1,0 +1,68 @@
+﻿@using e_commerce.Models
+
+
+<div id="fromCreateProduct" style="display:none;">
+    <form action="/submit_product" method="post" class="container mt-4">
+        <div class="form-group">
+            <label for="name">Product Name:</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Enter product name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea class="form-control" id="description" name="description" rows="4" placeholder="Enter product description" required></textarea>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="category_id">Category ID:</label>
+                <select name="category_id" class="form-control">
+                    <option>Select Category</option>
+                    @foreach (var item in ViewBag.Categories)
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
+
+
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="brand_id">Brand ID:</label>
+                <input type="number" class="form-control" id="brand_id" name="brand_id" placeholder="Enter brand ID" required>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="stock">Stock Quantity:</label>
+                <input type="number" class="form-control" id="stock" name="stock" placeholder="Enter stock quantity" required>
+            </div>
+            <div class="form-group">
+                <label for="quantity">Quantity per Order:</label>
+                <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Enter quantity per order" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" class="form-control" id="title" name="title" placeholder="Enter product title" required>
+        </div>
+
+        <div class="form-group">
+            <label for="status">Status:</label>
+            <select class="form-control" id="status" name="status" required>
+                <option >Select Status</option>
+                <option value="1">Active</option>
+                <option value="2">Inactive</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="thumb">Thumbnail Image URL:</label>
+            <input type="url" class="form-control" id="thumb" name="thumb" placeholder="Enter thumbnail URL">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+</div>
