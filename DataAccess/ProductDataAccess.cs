@@ -166,7 +166,8 @@ namespace e_commerce.DataAccess
                                                         Category category = new Category
                                                         {
                                                             CategoryId = Convert.ToInt32(rdr["CategoryId"]),
-                                                            Name = rdr["CategoryName"].ToString()
+                                                            Name = rdr["CategoryName"].ToString(),
+                                                            Description = rdr["Description"].ToString(),
 
                                                         };
                                                         item.Categories.Add(category);
