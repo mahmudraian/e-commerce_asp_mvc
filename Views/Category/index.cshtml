@@ -4,17 +4,33 @@
 
 }
 
+<script>
+    function createCategory() {
+        console.log("clicked");
+        $("#fromCreateCategory").dialog({
+            resizable: false,
+            height: 500, // or auto, whichever is preferred
+            width: 400,
+            modal: true,
+        });
+
+    }
+
+
+
+</script>
+
 
 
 <h2>@ViewBag.Msz</h2>
 
 <div class="table-responsive">
+    <button class="btn btn-primary" onclick='return createCategory()' style="float:right;">+</button>
     <table class="table table-hover">
 
 
 
         <thead>
-            <a style="float:right;" class="btn btn-outline-primary" href="@Url.Action("create","Category")">Add</a>
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
@@ -49,3 +65,5 @@
         </tbody>
     </table>
 </div>
+
+@Html.Partial("~/Views/Shared/_createCatgeory_from.cshtml")

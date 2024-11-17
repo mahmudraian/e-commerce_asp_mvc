@@ -33,5 +33,21 @@ namespace e_commerce.Controllers
             return View(categories);
         }
 
+        [HttpPost]
+        public ActionResult create(FormCollection formCollection)
+        {
+            var name = formCollection["name"];
+            var description = formCollection["description"];
+            var thumb = formCollection["thumb"];
+            int status = Convert.ToInt32(formCollection["status"]);
+            var result = _categoryDataAccess.SaveCategory(name, description, thumb, status);
+
+            return RedirectToAction("Index");   
+
+
+        }
+
+   
+
     }
 }

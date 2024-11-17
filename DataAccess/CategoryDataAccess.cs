@@ -18,7 +18,7 @@ namespace e_commerce.DataAccess
             _categoryDataAccess = ConfigurationManager.ConnectionStrings["ConnString"].ConnectionString;
         }
 
-        public int SaveCategory()
+        public int SaveCategory(string name, string description, string thumb, int status)
         {
             int result = 0;
             using (SqlConnection sqlConnection = new SqlConnection(_categoryDataAccess))
@@ -31,11 +31,10 @@ namespace e_commerce.DataAccess
                     cmd.CommandText = "createCategory";
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.CommandTimeout = 0;
-                    cmd.Parameters.Add(new SqlParameter("@name", "name"));
-                    cmd.Parameters.Add(new SqlParameter("@description", "description"));
-                    cmd.Parameters.Add(new SqlParameter("@thumb", "thumb"));
-                    cmd.Parameters.Add(new SqlParameter("@status", "status"));
-                    cmd.Parameters.Add(new SqlParameter("@created_at", "created_at"));
+                    cmd.Parameters.Add(new SqlParameter("@name", name));
+                    cmd.Parameters.Add(new SqlParameter("@description", description));
+                    cmd.Parameters.Add(new SqlParameter("@thumb", thumb));
+                    cmd.Parameters.Add(new SqlParameter("@status", status));
 
                     try
                     {
@@ -54,6 +53,43 @@ namespace e_commerce.DataAccess
 
             }
 
+            return result;
+        }
+
+
+        public int updateCategory(int id, string name, string description, string thumb, int status     )
+        {
+            int result = 0;
+            using (SqlConnection sqlConnection = new SqlConnection(_categoryDataAccess))
+            {
+
+                sqlConnection.Open();
+                using (SqlCommand cmd = sqlConnection.CreateCommand())
+                {
+                    cmd.Connection = sqlConnection;
+                    cmd.CommandText = "updateCategory";
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandTimeout = 0;
+                    cmd.Parameters.Add(new SqlParameter("@id", id));
+                    cmd.Parameters.Add(new SqlParameter("@name", name));
+                    cmd.Parameters.Add(new SqlParameter("@description", description));
+                    cmd.Parameters.Add(new SqlParameter("@thumb", thumb));
+                    cmd.Parameters.Add(new SqlParameter("@status", status));
+
+                    try
+                    {
+                        result = cmd.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        string sds = ex.Message;
+
+                    }
+
+                    cmd.Dispose();
+                    sqlConnection.Close();
+                }
+            }
             return result;
         }
 

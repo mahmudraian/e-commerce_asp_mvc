@@ -1,0 +1,44 @@
+﻿@using e_commerce.Models
+
+
+<div id="fromCreateCategory" style="display:none;">
+
+    @using (Html.BeginForm("create", "Category", FormMethod.Post))
+    {
+
+        <div class="form-group">
+            <label for="name">Category  Name:</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Enter product name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea class="form-control" id="description" name="description" rows="4" placeholder="Enter product description" required></textarea>
+        </div>
+
+
+       
+        <div class="form-group">
+            <label for="status">Status:</label>
+            <select class="form-control" id="status" name="status" required>
+                <option>Select Status</option>
+                <option value="1">Active</option>
+                <option value="2">Inactive</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="thumb">Thumbnail Image URL:</label>
+            <input type="url" class="form-control" id="thumb" name="thumb" placeholder="Enter thumbnail URL">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    }
+
+</div>
+
+
+ @*cmd.Parameters.Add(new SqlParameter("@name", name));
+ cmd.Parameters.Add(new SqlParameter("@description", description));
+ cmd.Parameters.Add(new SqlParameter("@thumb", thumb));
+ cmd.Parameters.Add(new SqlParameter("@status", status));*@
