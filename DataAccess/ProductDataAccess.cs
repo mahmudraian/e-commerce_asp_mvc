@@ -129,54 +129,22 @@ namespace e_commerce.DataAccess
                             {
                                 Product item = new Product
                                 {
-                                    ProductId = Convert.ToInt32(reader["ProductId"]),
-                                    ProductName = reader["ProductName"].ToString(),
-                                    ProductDescription = reader["ProductDescription"].ToString(),
-                                    ProductQuantity = Convert.ToInt32(reader["ProductQuantity"]),
-                                    ProductCount = Convert.ToInt32(reader["ProductCount"]),
-                                    created_at = Convert.ToDateTime(reader["created_at"])
+                                    Id = Convert.ToInt32(reader["ProductId"]),
+                                    Name = reader["ProductName"].ToString(),
+                                    Description = reader["ProductDescription"].ToString(),
+                                    Quantity = Convert.ToInt32(reader["ProductQuantity"]),
+                                    Stock = Convert.ToInt32(reader["ProductCount"]),
+                                    CreatedAt = Convert.ToDateTime(reader["created_at"])
                                 };
 
                                 // Check if the updated_at field is not DBNull
                                 if (reader["updated_at"] != DBNull.Value)
                                 {
-                                    item.updated_at = Convert.ToDateTime(reader["updated_at"]);
+                                    item.UpdatedAt = Convert.ToDateTime(reader["updated_at"]);
                                 }
 
-                                // Check if categories data exists
-                                if (reader["CategoryIds"] != DBNull.Value)
-                                {
-                                    // Use a separate connection for the nested query
-                                    using (SqlConnection categoryConnection = new SqlConnection(_connectionString))
-                                    {
-                                        categoryConnection.Open();
-
-                                        using (SqlCommand cmd = new SqlCommand("spGetProductCategory", categoryConnection))
-                                        {
-                                            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                                            cmd.Parameters.AddWithValue("@ProductId", item.ProductId);
-                                            cmd.CommandTimeout = 0;
-
-                                            using (SqlDataReader rdr = cmd.ExecuteReader())
-                                            {
-                                                if (rdr.HasRows)
-                                                {
-                                                    while (rdr.Read())
-                                                    {
-                                                        Category category = new Category
-                                                        {
-                                                            CategoryId = Convert.ToInt32(rdr["CategoryId"]),
-                                                            Name = rdr["CategoryName"].ToString(),
-                                                            Description = rdr["Description"].ToString(),
-
-                                                        };
-                                                        item.Categories.Add(category);
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
+                                
+                               
 
                                 products.Add(item);
                             }
@@ -189,7 +157,7 @@ namespace e_commerce.DataAccess
         }
 
 
-        public int saveProduct(string name, string description, string thumb,int  status, int stock,int  quantity,string title, decimal price, int category_id,int  brand_id)
+        public int saveProduct(string name, string description,string imageurl, string thumb,int  status, int stock,int  quantity,string title, decimal price, int category_id,int  brand_id)
         {
             int result = 0;
 
@@ -213,8 +181,9 @@ namespace e_commerce.DataAccess
                     sqlCommand.Parameters.AddWithValue("@status", status);
                     sqlCommand.Parameters.AddWithValue("@thumb", thumb);
                     sqlCommand.Parameters.AddWithValue("@price", price);
-                  
-                    result= sqlCommand.ExecuteNonQuery();
+                    sqlCommand.Parameters.AddWithValue("@image", imageurl);
+
+                    result = sqlCommand.ExecuteNonQuery();
 
                     sqlCommand.Dispose();
                     sqlConnection.Close();
@@ -236,8 +205,168 @@ namespace e_commerce.DataAccess
         }
 
 
+       public bool updateproduct(int id, string name, string description, string thumb, int status, int stock, int quantity, string title, decimal price, int category_id, int brand_id)
+        {
+            bool result = false;
+
+
+
+
+            return result;
+        }
+
+
         //single product
 
+        public Product SingleProduct(int id)
+        {
+            Product item = null;
+            using (SqlConnection sqlConnection = new SqlConnection(_connectionString))
+            {
+                sqlConnection.Open();
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    sqlCommand.Connection = sqlConnection;
+                    sqlCommand.CommandText = "[spGetProductById]";
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.Parameters.AddWithValue("@productid", id);
+                    sqlCommand.CommandTimeout = 0;
+
+                    SqlDataReader reader = sqlCommand.ExecuteReader();
+                    sqlCommand.Parameters.Clear();
+
+                    if (reader.Read())
+                    {
+                        item = new Product();
+                        item.Name = reader["name"].ToString();
+                        item.Description = reader["description"].ToString();
+                        item.Price = Convert.ToDecimal(reader["price"].ToString());
+                        item.Quantity = Convert.ToInt32(reader["quantity"].ToString());
+                        item.Stock = Convert.ToInt32(reader["stock"].ToString());
+                        item.CategoryId = Convert.ToInt32(reader["category_id"].ToString());
+                        item.CreatedAt = Convert.ToDateTime(reader["Created_at"].ToString());
+                        item.Title = reader["title"].ToString();
+                        item.Id = Convert.ToInt32(reader["id"].ToString());
+                        item.BrandId = Convert.ToInt32(reader["brand_id"].ToString());
+                        item.Status = Convert.ToInt32(reader["status"].ToString());
+                        item.ImageUrl = ImageUrlPrepare(reader["image"].ToString());
+                        item.ThumbnailUrl = reader["thumb"].ToString();
+
+
+                        if (reader["Updated_at"] != DBNull.Value && !string.IsNullOrEmpty(reader["Updated_at"].ToString()))
+                        {
+                            item.UpdatedAt = Convert.ToDateTime(reader["Updated_at"]);
+                        }
+                        
+
+
+
+
+
+                    }
+
+
+
+                }
+
+
+            }
+
+
+            return item;
+        }
+
+
+        public bool UpdateProduct(int id, string name, string description, string thumb, string image, int status, int stock, int quantity, string title, decimal price, int category_id, int brand_id)
+        {
+            bool result = false;
+
+            using (SqlConnection sqlConnection = new SqlConnection(_connectionString))
+            {
+                sqlConnection.Open();
+
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    sqlCommand.Connection = sqlConnection;
+                    sqlCommand.CommandText = "SpUpdateProduct";
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.Parameters.AddWithValue("@id", id);
+                    sqlCommand.Parameters.AddWithValue("@name", name);
+                    sqlCommand.Parameters.AddWithValue("@description", description);
+                    sqlCommand.Parameters.AddWithValue("@thumb", thumb);
+                    sqlCommand.Parameters.AddWithValue("@image", image);
+                    sqlCommand.Parameters.AddWithValue("@status", status);
+                    sqlCommand.Parameters.AddWithValue("@stock", stock);
+                    sqlCommand.Parameters.AddWithValue("@quantity", quantity);
+                    sqlCommand.Parameters.AddWithValue("@title", title);
+                    sqlCommand.Parameters.AddWithValue("@price", price);
+                    sqlCommand.Parameters.AddWithValue("@category_id", category_id);
+                    sqlCommand.Parameters.AddWithValue("@brand_id", brand_id);
+
+
+
+                    int rows = sqlCommand.ExecuteNonQuery();
+                    var result1 = rows;
+                    if (rows > 0)
+                    {
+                        result = true;
+                    }
+                   
+
+                }
+            }
+
+            return result;
+        }
+
+        public bool DeleteProduct(int id)
+        {
+            bool result = false;
+             using(SqlConnection sqlConnection = new SqlConnection(_connectionString))
+            {
+                sqlConnection.Open();
+                using(SqlCommand sqlCommand = new SqlCommand())
+                {
+                    sqlCommand.Connection = sqlConnection;
+                    sqlCommand.CommandText = "SpDeleteProduct";
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.CommandTimeout = 0;
+                    sqlCommand.Parameters.AddWithValue("@productId", id);
+
+                    int rows = sqlCommand.ExecuteNonQuery();
+                    if(rows > 0)
+                    {
+                        result = true;
+                    }
+
+                    sqlCommand.Dispose();
+
+
+                }
+
+                sqlConnection.Close();
+
+            }
+
+
+            return result;
+        }
+
+
+
+        private static string ImageUrlPrepare(string imageurl)
+        {
+            //~/Images/13910bf3-9b36-44cd-a4c5-6e884867a249.jpeg this is the path
+
+            var trimurl = imageurl.TrimStart('~');
+
+            var server_name = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
+
+            var full_image_path = server_name + trimurl;
+
+            return full_image_path;
+
+        }
 
 
 

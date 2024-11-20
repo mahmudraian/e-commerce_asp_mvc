@@ -20,6 +20,20 @@
 
     }
 
+ 
+
+    function UpdateProduct() {
+        console.log("clicked");
+        $("#fromUpdateProduct").dialog({
+            resizable: false,
+            height: 500, // or auto, whichever is preferred
+            width: 400,
+            modal: true,
+        });
+
+
+    }
+
 </script>
 
 <h2>@ViewBag.Msz</h2>
@@ -48,15 +62,16 @@
                 foreach (var item in Model)
                 {
                     <tr>
-                        <th scope="row">@item.ProductId</th>
-                        <td>@item.ProductName</td>
-                        <td>@item.ProductDescription</td>
-                        <td>@item.ProductCount</td>
-                        <td>@item.ProductQuantity</td>
+                        <th scope="row">@item.Id</th>
+                        <td>@item.Name</td>
+                        <td>@item.Description</td>
+                        <td>@item.Stock</td>
+                        <td>@item.Quantity</td>
                         <td>
-                            <a style="text-align:end;" class="btn btn-outline-primary" href="@Url.Action("create","Product")">Add</a>
-                            <a style="text-align:end;" class="btn btn-outline-primary" href="@Url.Action("create","Product")">Add</a>
-                            <a style="text-align:end;" class="btn btn-outline-primary" href="@Url.Action("create","Product")">Add</a>
+                            <a style="text-align:end;" class="btn btn-outline-primary" href="@Url.Action("Edit", "Product", new { id = @item.Id })">Edit</a>
+
+                            <a style="text-align:end;" class="btn btn-outline-danger" href="@Url.Action("Delete","Product", new {id = item.Id})">Delete</a>
+
                         </td>
 
 

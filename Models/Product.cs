@@ -2,55 +2,38 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
 namespace e_commerce.Models
 {
+
     public class Product
     {
-        public int ProductId { get; set; }
-        public string ProductName { get; set; }
+        [Required]
 
-        public string ProductTitle { get; set; }
-        public string ProductDescription { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
 
-        //public int ProductCategory_id { get; set; }
+        [Required]
+        [Range(0, double.MaxValue)]
+        public decimal Price { get; set; }
 
-        public List<Category> Categories { get; set; } = new List<Category>();
+        public string Description { get; set; }
+        public int CategoryId { get; set; }
+        public int Stock { get; set; }
+        public int Quantity { get; set; }
+        public string Title { get; set; }
+        public string ImageUrl { get; set; }
+        public string ThumbnailUrl { get; set; }
+        public int Status { get; set; }
 
-        public int Brand_id { get; set; }
+        public int BrandId { get; set; }
 
-        public int Status_id { get; set; }
+        public DateTime CreatedAt { get; set; }
 
-        public int ProductThumb { get; set; }
-
-        public Decimal ProductPrice { get; set; }
-
-
-        public int ProductCount { get; set; }
-
-        public int ProductQuantity { get; set; }
-
-        public DateTime created_at { get; set; }
-
-        public DateTime updated_at { get; set;}
-
-        public readonly ProductDataAccess _productDataAccess;
-
-
-        public Product() { 
-        
-        _productDataAccess =  new ProductDataAccess();
-        }
-
-        public List<Product> productsList() { 
-            
-            var products =  _productDataAccess.ListProduct();
-            
-            return products;
-        
-        }
-
+        public DateTime UpdatedAt { get; set; }
     }
+
 }
