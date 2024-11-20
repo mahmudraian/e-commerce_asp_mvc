@@ -5,6 +5,7 @@ using System.Configuration;
 using System.Configuration.Internal;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using System.Xml.Linq;
@@ -152,14 +153,44 @@ namespace e_commerce.DataAccess
 
 
                                 }
+                                if (item.CategoryId > 0)
+                                {
+                                    using (SqlCommand sqlCommand1 = new SqlCommand())
+                                    {
+                                        sqlCommand1.Connection = sqlConnection;
+                                        sqlCommand1.CommandText = "spGetProductCategory";
+                                        sqlCommand1.CommandType = System.Data.CommandType.StoredProcedure;
+                                        sqlCommand1.Parameters.AddWithValue("@Id", item.CategoryId);
+                                        sqlCommand1.CommandTimeout = 0;
 
-                                
-                               
+                                        using (SqlDataReader rdr = sqlCommand1.ExecuteReader())
+                                        {
+                                            if (rdr.HasRows)
+                                            {
+                                                while (rdr.Read())
+                                                {
+                                                    Category category = new Category();
+                                                    category.CategoryId = Convert.ToInt32(rdr["id"].ToString());
+                                                    category.Name = rdr["name"].ToString();
+                                                    category.Description = rdr["description"].ToString();
+                                                    category.thumb = rdr["thumb"].ToString();
+                                                    category.status = Convert.ToInt32(rdr["status"].ToString());
+                                                    item.Categories.Add(category);
+                                                }
+                                            }
+                                        }
+                                    }
 
+
+
+                                }
                                 products.Add(item);
                             }
                         }
+                        
                     }
+
+                  
                 }
             }
 

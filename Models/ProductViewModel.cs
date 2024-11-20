@@ -8,8 +8,7 @@ namespace e_commerce.Models
 {
     public class ProductViewModel
     {
-        //public IEnumerable<Category> Categories { get; set; }
-        //public Product Product { get; set; } // For binding the product details
+        
 
         public int Id { get; set; }
         public string Name { get; set; }
@@ -17,6 +16,8 @@ namespace e_commerce.Models
         [Required]
         [Range(0, double.MaxValue)]
         public decimal Price { get; set; }
+
+        public List<Category> Categories { get; set; } = new List<Category>();
 
         public string Description { get; set; }
         public int CategoryId { get; set; }

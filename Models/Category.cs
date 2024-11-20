@@ -1,4 +1,5 @@
 ﻿using e_commerce.DataAccess;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace e_commerce.Models
 
         public DateTime updated_at { get; set; }
 
+        [JsonIgnore]
         public readonly CategoryDataAccess _categoryDataAccess;
 
         public Category()
