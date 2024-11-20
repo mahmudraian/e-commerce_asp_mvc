@@ -83,42 +83,19 @@ namespace e_commerce.Controllers
             {
                 // Retrieve the list of products
                 var products = _productdataAccess.ListProduct();
-               // return Json(products, JsonRequestBehavior.AllowGet);
-                // Optional: Customize or filter the product data
-                  var response = products.Select(p => new
-                {
-                    ProductId = p.Id,
-                      Name = p.Name.Trim(), // Trimming extra spaces
-                    Description = p.Description,
-                    Price = p.Price,
-                    Stock = p.Stock,
-                    //Categpries= (from cat in p.Categories.AsEnumerable()
-                    //             select new
-                    //             {
-                    //                 categoryName = cat.Name,
-                    //                 categoryDescription = cat.Description
+               
 
 
+               
 
-                    //             }),
-
-
-                    //  Categories = (p.Categories != null && p.Categories.Any())
-                    //? p.Categories
-                    //: null // Include Categories only if not null or empty
-
-
-                  }
-                
-
-                );
+               
 
                 // Return the customized JSON response
                 return Json(new
                 {
                     success = true,
                     message = "Product list retrieved successfully.",
-                    data = response
+                    data = products
                 }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -133,16 +110,6 @@ namespace e_commerce.Controllers
             }
         }
 
-
-        //public ActionResult Edit(int id)
-        //{
-
-        //    var product = _productdataAccess.SingleProduct(id);
-        //    var categories = _categorydataaccess.CategoryList();
-
-        //    ViewBag.Categories = categories;
-        //    return View(product);
-        //}
 
         public ActionResult Edit(int id)
         {

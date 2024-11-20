@@ -108,9 +108,9 @@ namespace e_commerce.DataAccess
         // }
 
 
-        public List<Product> ListProduct()
+        public List<ProductViewModel> ListProduct()
         {
-            List<Product> products = new List<Product>();
+            List<ProductViewModel> products = new List<ProductViewModel>();
 
             using (SqlConnection sqlConnection = new SqlConnection(_connectionString))
             {
@@ -127,20 +127,30 @@ namespace e_commerce.DataAccess
                         {
                             while (reader.Read())
                             {
-                                Product item = new Product
+                                ProductViewModel item = new ProductViewModel
                                 {
                                     Id = Convert.ToInt32(reader["ProductId"]),
                                     Name = reader["ProductName"].ToString(),
                                     Description = reader["ProductDescription"].ToString(),
                                     Quantity = Convert.ToInt32(reader["ProductQuantity"]),
                                     Stock = Convert.ToInt32(reader["ProductCount"]),
-                                    CreatedAt = Convert.ToDateTime(reader["created_at"])
+                                    ImageUrl = ImageUrlPrepare(reader["image"].ToString()),
+                                    CreatedAt = reader["created_at"].ToString(),
+                                    CategoryId = Convert.ToInt32(reader["category_id"]),
+                                    CategoryName = reader["category_name"].ToString(),
+                                    Price = Convert.ToDecimal(reader["price"].ToString()),
+                                    Title = reader["title"].ToString(),
+                                    Status_name = Utility.Status_name(reader["status"] != DBNull.Value ? Convert.ToInt32(reader["status"]) : 0),
+
+
                                 };
 
                                 // Check if the updated_at field is not DBNull
                                 if (reader["updated_at"] != DBNull.Value)
                                 {
-                                    item.UpdatedAt = Convert.ToDateTime(reader["updated_at"]);
+                                    item.UpdatedAt = reader["updated_at"].ToString();
+
+
                                 }
 
                                 

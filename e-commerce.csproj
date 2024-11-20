@@ -133,6 +133,7 @@
     <Compile Include="Models\Product - Copy.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
+    <Compile Include="Models\Utility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
