@@ -121,14 +121,17 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\BrandController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="DataAccess\BrandDataAccess.cs" />
     <Compile Include="DataAccess\CategoryDataAccess.cs" />
     <Compile Include="DataAccess\ProductDataAccess.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Brand.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Product - Copy.cs" />
     <Compile Include="Models\Product.cs" />
@@ -194,6 +197,8 @@
     <Content Include="Views\Shared\_createCatgeory_from.cshtml" />
     <Content Include="Views\Product\Edit.cshtml" />
     <Content Include="Views\Shared\_createProduct_from.cshtml" />
+    <Content Include="Views\Brand\Index.cshtml" />
+    <Content Include="Views\Shared\_createBrand_from.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
