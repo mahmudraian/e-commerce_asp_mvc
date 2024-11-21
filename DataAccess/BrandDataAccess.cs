@@ -42,6 +42,7 @@ namespace e_commerce.DataAccess
                             brand.BrandTitle = sqlDataReader["BrandTitle"].ToString();
                             brand.BrandDescription = sqlDataReader["BrandDescription"].ToString();
                             brand.Thumb = sqlDataReader["Thumb"].ToString();
+                            brand.Status = Convert.ToInt32(sqlDataReader["status"].ToString());
                             brand.Create_at = Convert.ToDateTime(sqlDataReader["Created_at"]);
                             brand.Update_at = Convert.ToDateTime(sqlDataReader["Updated_at"]);
 
@@ -82,6 +83,73 @@ namespace e_commerce.DataAccess
 
         }
 
+        public Brand  GetBrand(int id)
+        {
+            Brand brand = new Brand();
+
+            using(SqlConnection sqlConnection = new SqlConnection(_connectionString))
+            {
+                using(SqlCommand sqlCommand = new SqlCommand())
+                {
+                    sqlCommand.Connection = sqlConnection;
+                    sqlCommand.CommandText = "SPGetBrandById";
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    sqlCommand.Parameters.AddWithValue("@id", id);
+
+                    sqlConnection.Open();
+
+                    using(SqlDataReader sqlDataReader = sqlCommand.ExecuteReader())
+                    {
+                        while(sqlDataReader.Read())
+                        {
+                            brand.BrandId = Convert.ToInt32(sqlDataReader["BrandId"]);
+                            brand.BrandName = sqlDataReader["BrandName"].ToString();
+                            brand.BrandTitle = sqlDataReader["BrandTitle"].ToString();
+                            brand.BrandDescription = sqlDataReader["BrandDescription"].ToString();
+                            brand.Thumb = sqlDataReader["Thumb"].ToString();
+                            brand.Status = Convert.ToInt32(sqlDataReader["Status"]);
+                            brand.Create_at = Convert.ToDateTime(sqlDataReader["Created_at"]);
+                            brand.Update_at = Convert.ToDateTime(sqlDataReader["Updated_at"]);
+                        }
+                    }
+                }
+
+
+            }
+
+
+            return brand;
+        }
+
+
+
+        public int  DeleteBrand(int id)
+        {
+            int result = 0;
+            using(SqlConnection sqlConnection = new SqlConnection(_connectionString))
+            {
+                using(SqlCommand sqlCommand = new SqlCommand())
+                {
+                    sqlCommand.Connection = sqlConnection;
+                    sqlCommand.CommandText = "SPDeleteBrand";
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    sqlCommand.Parameters.AddWithValue("@id", id);
+
+                    sqlConnection.Open();
+
+                    result = sqlCommand.ExecuteNonQuery();
+                }
+
+
+            }
+
+
+
+            return result;
+
+        }
 
     }
 }

@@ -39,5 +39,25 @@ namespace e_commerce.Controllers
 
             return RedirectToAction("Index");
         }   
+
+
+        public ActionResult Edit(int id)
+        {
+
+
+            var brand = _brandDataAccess.GetBrand(id);
+            ViewBag.Title = "Edit Brand";
+            return View(brand);
+        }
+
+
+        public ActionResult Delete(int id)
+        {
+            var result = _brandDataAccess.DeleteBrand(id);  
+
+            return RedirectToAction("Index");
+        }
+
+        
     }
 }

@@ -15,6 +15,8 @@ namespace e_commerce.Models
 
         public string Thumb { get; set; }
 
+        public int Status { get; set; }
+
         public DateTime Create_at { get; set; }
 
         public DateTime Update_at { get; set; }
